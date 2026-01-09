@@ -51,7 +51,7 @@ module CityState
 
   def self.install(country)
     # get CSV if doesn't exists
-    update_maxmind unless File.exists? MAXMIND_DB_FN
+    update_maxmind unless File.exist? MAXMIND_DB_FN
 
     # normalize "country"
     country = country.to_s.upcase
@@ -113,7 +113,7 @@ module CityState
     # load the country file
     if @cities[country].nil?
       cities_fn = File.join(FILES_FOLDER, "cities.#{country.to_s.downcase}")
-      self.install(country) if ! File.exists? cities_fn
+      self.install(country) if ! File.exist? cities_fn
       @cities[country] = symbolize(YAML::load_file(cities_fn))
     end
 
@@ -130,7 +130,7 @@ module CityState
     # load the country file
     if @states[country].nil?
       states_fn = File.join(FILES_FOLDER, "states.#{country.to_s.downcase}")
-      self.install(country) if ! File.exists? states_fn
+      self.install(country) if ! File.exist? states_fn
       @states[country] = symbolize(YAML::load_file(states_fn))
     end
 
@@ -139,9 +139,9 @@ module CityState
 
   # list of all countries of the world (countries.yml)
   def self.countries
-    if ! File.exists? COUNTRIES_FN
+    if ! File.exist? COUNTRIES_FN
       # countries.yml doesn't exists, extract from MAXMIND_DB
-      update_maxmind unless File.exists? MAXMIND_DB_FN
+      update_maxmind unless File.exist? MAXMIND_DB_FN
 
       # reads CSV line by line
       File.foreach(MAXMIND_DB_FN) do |line|
